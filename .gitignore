@@ -3,8 +3,14 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# JSON
+*.json
+
 # C extensions
 *.so
+
+# Logs
+logs/
 
 # Distribution / packaging
 .Python

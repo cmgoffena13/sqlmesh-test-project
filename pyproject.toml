@@ -1,0 +1,9 @@
+[project]
+name = "sqlmesh-test-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "sqlmesh[bigquery]>=0.231.0",
+]

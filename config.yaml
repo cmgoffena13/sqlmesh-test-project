@@ -1,0 +1,65 @@
+# --- Gateway Connection ---
+gateways:
+  bigquery:
+    connection:
+      # For more information on configuring the connection to your execution engine, visit:
+      # https://sqlmesh.readthedocs.io/en/stable/reference/configuration/#connection
+      # https://sqlmesh.readthedocs.io/en/stable/integrations/engines/bigquery/#connection-options
+      type: bigquery
+      project: crypto-topic-479022-e7
+      keyfile: keyfile.json
+      method: oauth
+    state_connection:
+      type: duckdb
+      database: state.db
+    scheduler:
+      type: builtin
+
+      # concurrent_tasks: 1
+      # register_comments: True
+      # pre_ping: False
+      # pretty_sql: False
+      # schema_differ_overrides: 
+      # catalog_type_overrides: 
+      # method: oauth
+      # execution_project: 
+      # quota_project: 
+      # location: 
+      # keyfile: 
+      # keyfile_json: 
+      # token: 
+      # refresh_token: 
+      # client_id: 
+      # client_secret: 
+      # token_uri: 
+      # scopes: 
+      # impersonated_service_account: 
+      # job_creation_timeout_seconds: 
+      # job_execution_timeout_seconds: 
+      # job_retries: 1
+      # job_retry_deadline_seconds: 
+      # priority: 
+      # maximum_bytes_billed: 
+
+default_gateway: bigquery
+
+# --- Model Defaults ---
+# https://sqlmesh.readthedocs.io/en/stable/reference/model_configuration/#model-defaults
+
+model_defaults:
+  dialect: bigquery
+  start: 2025-01-01 # Start date for backfill history
+  cron: '@daily'    # Run models daily at 12am UTC (can override per model)
+
+# --- Linting Rules ---
+# Enforce standards for your team
+# https://sqlmesh.readthedocs.io/en/stable/guides/linter/
+
+linter:
+  enabled: true
+  rules:
+    - ambiguousorinvalidcolumn
+    - invalidselectstarexpansion
+    - noambiguousprojections
+    - nomissingaudits
+    - nomissingunittest
