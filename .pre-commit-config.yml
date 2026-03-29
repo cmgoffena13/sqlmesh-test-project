@@ -1,0 +1,44 @@
+default_install_hook_types:
+  - pre-commit
+  - pre-push
+
+repos:
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        entry: uv run -- ruff check --fix
+        language: system
+        types: [python]
+        pass_filenames: true
+      - id: ruff-format
+        name: ruff-format
+        entry: uv run -- ruff format
+        language: system
+        types: [python]
+        pass_filenames: true
+      - id: ty-check
+        name: ty-check
+        entry: uv run -- ty check
+        language: system
+        types: [python]
+        pass_filenames: true
+      - id: sqlmesh-format
+        name: sqlmesh-format
+        entry: uv run -- sqlmesh format
+        language: system
+        pass_filenames: true
+      - id: sqlmesh-lint
+        name: sqlmesh-lint
+        entry: uv run -- sqlmesh lint
+        language: system
+        pass_filenames: false
+
+  - repo: local
+    hooks:
+      - id: sqlmesh-test
+        name: sqlmesh-test
+        entry: uv run -- sqlmesh test
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
