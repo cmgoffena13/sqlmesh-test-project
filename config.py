@@ -59,7 +59,7 @@ config = Config(
         )
     ],
     pinned_environments={"dev_cort"},
-    log_limit=5,
+    log_limit=10,
     linter=LinterConfig(
         enabled=True,
         rules={
