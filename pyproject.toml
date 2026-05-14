@@ -5,7 +5,9 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "sqlmesh[bigquery]>=0.231.0",
+    "pendulum>=3.2.0",
+    "pydantic-settings>=2.14.1",
+    "sqlmesh[bigquery,gcppostgres,slack]>=0.231.0",
 ]
 
 [tool.ruff]

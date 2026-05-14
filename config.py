@@ -9,18 +9,32 @@ from sqlmesh.core.config import (
     LinterConfig,
     ModelDefaultsConfig,
 )
-from sqlmesh.core.config.connection import BigQueryConnectionMethod
+from sqlmesh.core.config.connection import BigQueryConnectionMethod, GCPPostgresConnectionConfig
+from sqlmesh.core.notification_target import NotificationEvent, SlackWebhookNotificationTarget
+
+from settings import settings
 
 config = Config(
     gateways={
         "production": GatewayConfig(
             connection=BigQueryConnectionConfig(
-                project="crypto-topic-479022-e7",
+                project=settings.GOOGLE_PROJECT,
                 keyfile="keyfile.json",
                 method=BigQueryConnectionMethod.OAUTH,
+                concurrent_tasks=5,
             ),
-            state_connection=DuckDBConnectionConfig(
-                database="state.db",
+            state_connection=GCPPostgresConnectionConfig(
+                instance_connection_string=settings.CLOUD_SQL_INSTANCE_CONNECTION_STRING,
+                db="test",
+                user=settings.CLOUD_SQL_USER,
+                ip_type="public",
+                keyfile="keyfile.json",
+                enable_iam_auth=True,
+                concurrent_tasks=5,
+                timeout=30,
+            ),
+            test_connection=DuckDBConnectionConfig(
+                database="test.db",
             ),
             scheduler=BuiltInSchedulerConfig(),
         )
@@ -31,6 +45,21 @@ config = Config(
         start="2025-01-01",
         cron="@daily",
     ),
+    notification_targets=[
+        SlackWebhookNotificationTarget(
+            url=settings.SLACK_WEBHOOK_URL,
+            notify_on=frozenset(
+                [
+                    NotificationEvent.APPLY_FAILURE,
+                    NotificationEvent.RUN_FAILURE,
+                    NotificationEvent.AUDIT_FAILURE,
+                    NotificationEvent.MIGRATION_FAILURE,
+                ]
+            ),
+        )
+    ],
+    pinned_environments={"dev_cort"},
+    log_limit=5,
     linter=LinterConfig(
         enabled=True,
         rules={
