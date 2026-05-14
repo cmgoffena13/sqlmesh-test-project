@@ -25,11 +25,10 @@ config = Config(
             ),
             state_connection=GCPPostgresConnectionConfig(
                 instance_connection_string=settings.CLOUD_SQL_INSTANCE_CONNECTION_STRING,
-                db="test",
+                db="sqlmesh",
                 user=settings.CLOUD_SQL_USER,
+                password=settings.CLOUD_SQL_PASSWORD,
                 ip_type="public",
-                keyfile="db_keyfile.json",
-                enable_iam_auth=True,
                 concurrent_tasks=5,
                 timeout=30,
             ),
