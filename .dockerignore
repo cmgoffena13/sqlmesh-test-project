@@ -1,0 +1,35 @@
+# Git
+.git
+.gitignore
+.gitkeep
+
+# Python
+__pycache__
+.Python
+
+# IDE
+.pytest_cache/
+.ruff_cache/
+.vscode/
+.idea/
+.cursor/
+.cache/
+
+# GCP - JSON Key Files
+*.json
+
+# DEV
+Makefile
+.pre-commit-config.yaml
+.env
+.env.example
+README.md
+CICD.md
+
+# Logs
+*.log
+logs/
+
+# Docker
+Dockerfile
+docker-compose.yaml
