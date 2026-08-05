@@ -4,7 +4,7 @@ install:
 	uv sync --all-extras
 	uv run -- prek install
 	
-format: ruff-lint ty-lint sqlmesh-lint sqlmesh-test sqlmesh-external-refs
+ready: ruff-lint ty-lint sqlmesh-lint sqlmesh-test sqlmesh-external-refs
 	uv run -- ruff format
 
 # SQLMesh Commands
