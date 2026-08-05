@@ -21,12 +21,16 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 FROM python:${PYTHON_VERSION}-${IMAGE_TYPE} AS runtime
 
 RUN groupadd -r appgroup &&  \
-    useradd -r -g appgroup appuser
+    useradd -r -g appgroup -d /app appuser
 
-ENV PATH="/app/.venv/bin:$PATH" PYTHONUNBUFFERED=1
+ENV PATH="/app/.venv/bin:$PATH" PYTHONUNBUFFERED=1 HOME=/app SQLMESH_HOME=/app/.sqlmesh
 
 WORKDIR /app
 
 COPY --from=builder --chown=appuser:appgroup /app /app
 
+# NOTE: Fix SQLMesh ownership issues.
+RUN mkdir -p /app/.cache /app/.sqlmesh /app/tmp/sqlmesh-exports && chown -R appuser:appgroup /app
+
 USER appuser
+ENTRYPOINT ["python", "-m"]
