@@ -4,13 +4,14 @@ Basic Setup for Open Source Deployment
 
 ## Setup
 
-1. Run `make install`
+1. Download `uv`
+2. Run `make install`
 
 ## Current Configuration
 
 ### Production Gateway
  - Connection: BigQuery
- - State Connection: DuckDB (Recommended: Postgres)
+ - State Connection: Cloud SQL (Postgres)
 
 ### Linter
  - Enabled
